@@ -49,4 +49,18 @@ public class Validator {
 
         return end_customDelimiterIndex;
     }
+
+    // 결과 값(덧셈)의 오버플로우 검증
+    public static long validateSumOverflow(long[] split_num) {
+        long result = 0;
+
+        try {
+            result = Arrays.stream(split_num)
+                    .reduce(0L, Math::addExact);
+        } catch (ArithmeticException e) {
+            throw new IllegalArgumentException(ErrorMessageTemplate.INVALID_SUM_OVERFLOW.getMessage() + result);
+        }
+
+        return result;
+    }
 }
